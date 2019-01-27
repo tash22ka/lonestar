@@ -1,9 +1,12 @@
 # LTO_LPoSDistributor
-A revenue distribution tool for LTO nodes\
-Welcome to Liquid Leasing Network version of the LPoSdistribution script,
+A revenue distribution tool for LTO.network nodes
+
+Welcome to Liquid Leasing Network version of the LPoSdistribution script for LTO.network,
 which queues up multiple sessions and automates next session info :-)
 
 Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
+
+Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs.
 
 You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0 for his stats node: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
 
