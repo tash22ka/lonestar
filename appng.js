@@ -235,7 +235,7 @@ var prepareDataStructure = function(blocks) {
             });
         }
 
-      ltoFees += (blockltofees - Math.round(parseInt(blockltofees / 5) * 3));
+      ltoFees += (blockltofees - Math.round(parseInt(blockltofees / 5) * 2));
 
       }
 
