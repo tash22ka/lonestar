@@ -22,8 +22,8 @@ const transactiontimeout = 1500 //Msecs to wait between every transaction posted
 const paymentsdonedir = 'paymentsDone/'
 const maxmasstransfertxs = 100 //Maximum nr of transactions that fit in 1 masstransfer
 const coins = [ "lto" ] //Which coins we take into consideration for masstransfers
-const transferfee = 100000
-const masstransferfee = 50000
+const transferfee = 25000000
+const masstransferfee = 1000000
 const masstransferversion = 1
 
 
