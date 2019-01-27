@@ -7,9 +7,9 @@
  */
 
 var config = {
-    payoutfileprefix: 'wavesleaserpayouts',
-    node: 'http://localhost:6869',
-    apiKey: 'your api key'
+    payoutfileprefix: 'ltoleaserpayouts',
+    node: 'http://217.100.219.250:6869',
+    apiKey: 'testnetapi'
 };
 
 const paymentqueuefile = 'payqueue.dat'
@@ -148,7 +148,7 @@ var start = function(jsonarray, queueid) {
 var doPayment = function(payments, counter, batchid) {
 	var payment = payments[counter];
 
-	if ( payment.assetId == undefined ) { var assetname = 'Waves' }
+	if ( payment.assetId == undefined ) { var assetname = 'lto' }
 	else { assetname = payment.assetId }
 
 	setTimeout(function() {

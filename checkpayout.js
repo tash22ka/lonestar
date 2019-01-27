@@ -2,7 +2,7 @@ var request = require('sync-request');
 var fs = require('fs');
 
 /**
- * Waves Node script for checking a payments file's transactions on blockchain
+ * lto Node script for checking a payments file's transactions on blockchain
  * outputs the a payment file with missing payments 
  *    
  * Put your settings here:
@@ -19,7 +19,7 @@ var config = {
     startBlockHeight: 696358,
     endBlock: 696393,
     filename: 'payment24', //.json added automatically
-    node: 'http://nodes.wavesnodes.com',
+    node: 'http://217.100.219.250:6869',
     NewfeeAssetId: "5BK9HPKmSkxoMdqvDzneb2UaW2NzDRjoMpMvQWfB4NcK",
     ChangeAssetFee: false    
 };

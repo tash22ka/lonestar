@@ -4,8 +4,8 @@
  */
 
 var config = {
-    payoutfileprefix: 'wavesleaserpayouts',
-    node: 'http://localhost:6869',	//Change this value to your blockchain node
+    payoutfileprefix: 'ltoleaserpayouts',
+    node: 'http://217.100.219.250:6869',	//Change this value to your blockchain node
     paymentqueuefile: 'payqueue.dat'
 };
 
@@ -120,7 +120,7 @@ function checkpayouts (filename, batchid, jobnr) {
 
 		payments.forEach(function(payment) {		//For every json set { } found, which marks 1 payment
 
-       			if (payment.assetId) {			//We found an 'assetId' for current payment (tokens, not WAVES!)
+       			if (payment.assetId) {			//We found an 'assetId' for current payment (tokens, not lto!)
        				if (!assets[payment.assetId]) { //First time found -> not in var assets {} yet
                				assetsFound++;		//Increase var assetFound with 1
                				assets[payment.assetId] = {	//Set token string in asset array
@@ -134,19 +134,19 @@ function checkpayouts (filename, batchid, jobnr) {
                				assets[payment.assetId].amount += payment.amount;	//Increase the amount with next payment {} amount
 					assets[payment.assetId].transactions++ //increase counter asset transactions
        	  			}
-       			} else {	// 'assetId' not found in one set {} -> means WAVES transactions
-       				if (!assets['Waves']) {		//First time found -> not in var assets {} yet
+       			} else {	// 'assetId' not found in one set {} -> means lto transactions
+       				if (!assets['lto']) {		//First time found -> not in var assets {} yet
        					assetsFound++;		//Increase var assetFound with 1
-                			assets['Waves'] = {	//Set Waves string in asset array
+                			assets['lto'] = {	//Set lto string in asset array
 						batchid: batchid,
-                    				amount: payment.amount,	//set amount from payment {} to Waves.amount in assets array
+                    				amount: payment.amount,	//set amount from payment {} to lto.amount in assets array
 						transactions: 1, //Set counter on first transaction
                     				decimals: 8,
-                    				name: 'Waves'	//set name key to 'Waves' in assets array
+                    				name: 'lto'	//set name key to 'lto' in assets array
                 			};
-            			} else {			//Waves bestaat al in assets array
-               				assets['Waves'].amount += payment.amount;	//Increase the amount with next payment {} amount
-					assets['Waves'].transactions++ //Increase counter Waves transactons
+            			} else {			//lto bestaat al in assets array
+               				assets['lto'].amount += payment.amount;	//Increase the amount with next payment {} amount
+					assets['lto'].transactions++ //Increase counter lto transactons
             			}
         		}
 		});	//End forEach
@@ -171,7 +171,7 @@ function checkpayouts (filename, batchid, jobnr) {
     			var counter = 0;
 
     			for (var assetId in assets) {
-        			if (assetId !== 'Waves') {
+        			if (assetId !== 'lto') {
             				request.get(config.node + '/transactions/info/' + assetId, function(err, response, body) {
                					if (!err) {
                						var asset = JSON.parse(body);
@@ -238,8 +238,8 @@ function checkpayouts (filename, batchid, jobnr) {
 					singletxscosts = singletransactions*transferfee/Math.pow(10, 8)
 					masstransfercosts = masstransfercosts/Math.pow(10, 8)
 
-					console.log("    " + jobnr + ": Cost involved with " + singletransactions + " single transactions: " + singletxscosts + " Waves.")
-					console.log("    " + jobnr + ": Cost involved with " + totalmasstransfers + " masstransfers: " + masstransfercosts + " Waves.\n")
+					console.log("    " + jobnr + ": Cost involved with " + singletransactions + " single transactions: " + singletxscosts + " lto.")
+					console.log("    " + jobnr + ": Cost involved with " + totalmasstransfers + " masstransfers: " + masstransfercosts + " lto.\n")
 
 					allbatchsinglecost += singletxscosts
 					allbatchmasstxcost += masstransfercosts
@@ -263,8 +263,8 @@ function checkpayouts (filename, batchid, jobnr) {
 						i++
 					}
 					console.log('\ntotal blocks: ' + blocks + '\n');
-					console.log("Total Waves transaction fee when single transactions would be used: " + allbatchsinglecost)
-					console.log("Total Waves transaction fee when masstransfers would be used: " + allbatchmasstxcost.toFixed(8) + "\n")
+					console.log("Total lto transaction fee when single transactions would be used: " + allbatchsinglecost)
+					console.log("Total lto transaction fee when masstransfers would be used: " + allbatchmasstxcost.toFixed(8) + "\n")
 
 					if ( allbatchmasstxcost < allbatchsinglecost ) {
 						console.log("It's cheapest to do the payouts with masstransfers. You save " +

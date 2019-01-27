@@ -8,7 +8,7 @@ var fs = require('fs');
  *     - amountToDistribute: amount of tokens that you want to distribute (have decimals in mind here...) use in combination with isStatic!
  *     - isStatic: boolean to select on which the sending amount is bases, true/false 
  *     			* true: every address receives amountToDistribute
- *     			* false: every address receives his percentage of amountToDistribute based on leased waves        
+ *     			* false: every address receives his percentage of amountToDistribute based on leased lto        
  *     - assetToDistributeId: id of the asset you want to airdrop
  *     - filename: name of the file the payments are written to
  *     - leasers: name of the file which contains the active leasers info 
@@ -17,7 +17,7 @@ var fs = require('fs');
 var config = {
     address: '',
     amountToDistribute: 1,
-    assetToDistributeId: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC', //BearWaves
+    assetToDistributeId: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC', //Bearlto
     filename: 'airdrop_leasers.json',
     leasers: 'LastBlockLeasers.json',
     isStatic: true,

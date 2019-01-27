@@ -1,14 +1,12 @@
 /* =================================================================================================================
- * V 1.2	'The lazy' version
+ * V1.0.0 - Liquid Leasing Network - LTO_LPoSDistributor
  *
- * Plukkie's edit of W0utjes's LPoSDistributor V 2.0.3
+ * A fork of Plukkies version of the LPoSdistribution script for LTO.network (https://github.com/plukkie/WavesLPoSDistributer)
  *
- * Donations are welcome if you like this version of the script: 'The Lazy' version
- * - you can DONATE Waves to alias 'donatewaves@plukkie' or address '3PKQKCw6DdqCvuVgKtZMhNtwzf2aTZygPu6'
- * - you can LEASE your Waves to alias 'plukkieforger' or 'plukkieleasing' or address '3P7ajba4wWLXq6t1G8VaoaVqbUb1dDp8fm4'
+ * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5'
  *
  * Please see CHANGELOG.txt for all features/changes
- * Please see README.md for complete explanation of LPoSdistributer package
+ * Please see README.md for complete explanation of LPoSdistributor package
  *
  * Bare minimum changes to edit:
  * - put your address here: const myleasewallet = '<Put your Leasewallet address here>';
@@ -16,28 +14,20 @@
  * - How many percentage fees do you want to share with your leasers: const feedistributionpercentage = <nr here>;
  * - How many blocks do you want to collect in every collector run: const blockwindowsize = <nr here>;
  *
- * Optional;
- * - How many MRT tokens to distribute per block: const mrtperblock = <nr here>;
- * - put here addresses that should not get fee share: var nofeearray = [ "<wallet address X>", 
- *									  "<wallet address Y>" ]
- *
  * Don't forget to set values in batchinfo.json only once! :-)
  * See README.md for explanation
  *
- * That's it!
- * Enjoy the happy (lazy) payout sessions that do the work for you!
  * ================================================================================================================= */
 
 
 // START - Put your settings here
-const myleasewallet = '<your node wallet>';	//Put here the address of the wallet that your node uses
-const myquerynode = "http://localhost:6869";	//The node and API port that you use (defaults to localhost)
-const feedistributionpercentage = 90;		//How many % do you want to share with your leasers (defaults to 90%)
-const mrtperblock = 0;				//How many MRT tokens per block do you want to share with your leasers (default 0)
+const myleasewallet = '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5';	//Put here the address of the wallet that your node uses
+const myquerynode = "http://217.100.219.250:6869";	//The node and API port that you use (defaults to localhost)
+const feedistributionpercentage = 95;		//How many % do you want to share with your leasers (defaults to 90%)
 const blockwindowsize = 5000; 			//how many blockss to proces for every paymentcycle
 
 // Put here wallet addresses that will receive no fees
-// Could be wallets that award you with leases like the waves small node program
+// Could be wallets that award you with leases like the lto small node program
 // var nofeearray = [ "3P6CwqcnK1wyW5TLzD15n79KbAsqAjQWXYZ",       //index0
 //                    "3P9AodxBATXqFC3jtUydXv9YJ8ExAD2WXYZ" ];
 var nofeearray = [ ]; 
@@ -64,7 +54,7 @@ if (fs.existsSync(batchinfofile)) {
    payid = parseInt(mybatchdata["paymentid"]); 
    attachment = mybatchdata["attachment"];
 
-   // Collect height of last block in waves blockchain
+   // Collect height of last block in lto blockchain
    let options = {
 	uri: "/blocks/height",
 	baseUrl: myquerynode,
@@ -96,11 +86,9 @@ var config = {
     address: myleasewallet,
     startBlockHeight: paymentstartblock,
     endBlock: paymentstopblock,
-    distributableMrtPerBlock: mrtperblock,  //MRT distribution stopped
-    filename: 'wavesleaserpayouts', //.json added automatically
+    filename: 'ltoleaserpayouts', //.json added automatically
     paymentid: payid,
     node: myquerynode,
-    //node: 'http://nodes.wavesnodes.com',
     assetFeeId: null, //not used anymore with sponsored tx
     feeAmount: 100000,
     paymentAttachment: attachment, 
@@ -140,7 +128,6 @@ for(var cancelindex in myCanceledLeases)
 console.log("done cleaning, removed: " + cleancount);
 
 var payments = [];
-var mrt = [];
 
 var myAliases = [];
 
@@ -157,8 +144,8 @@ var myForgedBlocks = [];
   * masspayment tool.
  */
 var start = function() {
-  console.log('get aliases');
-  myAliases = getAllAlias();
+//   console.log('get aliases');
+//   myAliases = getAllAlias();
     console.log('getting blocks...');
     var blocks = getAllBlocks();
     console.log('preparing datastructures...');
@@ -193,7 +180,7 @@ var prepareDataStructure = function(blocks) {
     blocks.forEach(function(block,index) {
     var checkprevblock = false;
 	var myblock = false;
-        var wavesFees = 0;
+        var ltoFees = 0;
 
         if (block.generator === config.address)
         {
@@ -201,7 +188,7 @@ var prepareDataStructure = function(blocks) {
             checkprevblock = true;
 			myblock = true;
 		}
-		var blockwavesfees=0;
+		var blockltofees=0;
 
         block.transactions.forEach(function(transaction)
         {
@@ -216,26 +203,26 @@ var prepareDataStructure = function(blocks) {
 
 			if(myblock)
 			{
-                // considering Waves fees
+                // considering lto fees
                 if (!transaction.feeAsset || transaction.feeAsset === '' || transaction.feeAsset === null)
                 {
-                    if(transaction.fee < 200000000) // if tx waves fee is more dan 2 waves, filter it. probably a mistake by someone
+                    if(transaction.fee < 150000000000) // if tx lto fee is more dan 150 lto, filter it. probably a mistake by someone
                     {
-                        //wavesFees += (transaction.fee*0.4);
-                        blockwavesfees += transaction.fee;
+                        //ltoFees += (transaction.fee*0.4);
+                        blockltofees += transaction.fee;
 
                     } else {
                         console.log("Filter TX at block: " + block.height + " Amount: " +  transaction.fee)
                     }
                 } else if (block.height > 1090000 && transaction.type === 4) {
-                blockwavesfees += 100000;
+                blockltofees += 100000;
 		  }
 
 			}
       });
-      wavesFees += Math.round(parseInt(blockwavesfees / 5) * 2);
+      ltoFees += Math.round(parseInt(blockltofees / 5) * 2);
 
-      blockwavesfees=0;
+      blockltofees=0;
 
       if(checkprevblock)
       {
@@ -245,27 +232,27 @@ var prepareDataStructure = function(blocks) {
             var prevblock = blocks[index - 1];
             prevblock.transactions.forEach(function(transaction)
             {
-                // considering Waves fees
+                // considering lto fees
                 if (!transaction.feeAsset || transaction.feeAsset === '' || transaction.feeAsset === null) {
-              	if(transaction.fee < 200000000) // if tx waves fee is more dan 2 waves, filter it. probably a mistake by someone
+              	if(transaction.fee < 150000000000) // if tx lto fee is more dan 150 lto, filter it. probably a mistake by someone
               	{
-                  	//wavesFees += (transaction.fee*0.6);
-                  	blockwavesfees += transaction.fee;
+                  	//ltoFees += (transaction.fee*0.6);
+                  	blockltofees += transaction.fee;
                 } else {
   			        console.log("Filter TX at block: " + block.height + " Amount: " +  transaction.fee)
   		        }
             } else if (block.height > 1090000 && transaction.type === 4) {
-                blockwavesfees += 100000;
+                blockltofees += 100000;
 	      }
 
             });
         }
 
-      wavesFees += (blockwavesfees - Math.round(parseInt(blockwavesfees / 5) * 2));
+      ltoFees += (blockltofees - Math.round(parseInt(blockltofees / 5) * 2));
 
       }
 
-        block.wavesFees = wavesFees;
+        block.ltoFees = ltoFees;
 
     });
 };
@@ -276,9 +263,7 @@ var prepareDataStructure = function(blocks) {
  * @returns {Array} all relevant blocks
  */
 var getAllBlocks = function() {
-    // leases have been resetted in block 462000, therefore, this is the first relevant block to be considered
-    //var firstBlockWithLeases=462000;
-    //var currentStartBlock = firstBlockWithLeases;
+
     var blocks = [];
 
     while (currentStartBlock < config.endBlock) {
@@ -316,40 +301,17 @@ var getAllBlocks = function() {
     return blocks;
 };
 
-
 /**
- * Method that returns all aliases for address.
- *
- * @returns {Array} all aliases for address
- */
-var getAllAlias = function() {
-
-						var AliasArr = [];
-            var Aliases = JSON.parse(request('GET', config.node + '/alias/by-address/' + config.address, {
-                'headers': {
-                    'Connection': 'keep-alive'
-                }
-            }).getBody('utf8'));
-
-        Aliases.forEach(function(alias)
-        {
-						 AliasArr.push(alias);
-						 console.log(alias);
-        });
-    return AliasArr;
-}
-
-/**
- * This method distributes either Waves fees and MRT to the active leasers for
+ * This method distributes lto fees
  * the given block.
  *
  * @param activeLeases active leases for the block in question
- * @param amountTotalLeased total amount of leased waves in this particular block
+ * @param amountTotalLeased total amount of leased lto in this particular block
  * @param block the block to consider
  */
 var distribute = function(activeLeases, amountTotalLeased, block) {
 
-    var fee = block.wavesFees;
+    var fee = block.ltoFees;
 
     for (var address in activeLeases) {
 
@@ -365,19 +327,14 @@ var distribute = function(activeLeases, amountTotalLeased, block) {
 
         var assetamounts = [];
 
-
-        var amountMRT = share * config.distributableMrtPerBlock;
-
        	if (address in payments) {
        		payments[address] += amount * (config.percentageOfFeesToDistribute / 100);
-       		mrt[address] += amountMRT;
 	} else {
 		payments[address] = amount * (config.percentageOfFeesToDistribute / 100);
-		mrt[address] = amountMRT;
 	}
 
 	if ( payout == true ) {
-        	console.log(address + ' will receive ' + amount + ' of(' + fee + ') and ' + amountMRT + ' MRT for block: ' + block.height + ' share: ' + share);
+        	console.log(address + ' will receive ' + amount + ' of(' + fee + ') share: ' + share);
 	} else if ( payout == false ) {
 		console.log(address + ' marked as NOPAYOUT, will not receive fee share.');
 	}
@@ -390,7 +347,6 @@ var distribute = function(activeLeases, amountTotalLeased, block) {
  */
 var pay = function() {
     var transactions = [];
-    var totalMRT = 0;
     var totalfees =0;
 
     var html = "";
@@ -408,16 +364,12 @@ var pay = function() {
 "<div class=\"container\">" +
 "  <h3>Fee's between blocks " + config.startBlockHeight + " - " + config.endBlock + ", Payout #" + config.paymentid + "</h3>" +
 "  <h4>(LPOS address: " + config.address + ")</h4>" +
-"  <h5>29-06-2017: Hi all, again a short update of the fee's earned by the wavesnode 'Plukkieforger'. Greetings!</h5> " +
-"  <h5>You can always contact me by <a href=\"mailto:plukkie@gmail.com\">E-mail</a></h5>" +
 "  <h5>Blocks forged: " + BlockCount + "</h5>" +
 "  <table class=\"table table-striped table-hover\">" +
 "    <thead> " +
 "      <tr>" +
 "        <th>Address</th>" +
-"        <th>Waves</th>" +
-"        <th>MRT</th>" +
-
+"        <th>LTO</th>" +
 "      </tr>" +
 "    </thead>" +
 "    <tbody>";
@@ -427,9 +379,9 @@ var pay = function() {
 
 	if ( nofeearray.indexOf(address) == -1 ) {
 
-		console.log(address + ' will receive ' + parseFloat(payment).toFixed(8) + ' and ' + parseFloat(mrt[address]).toFixed(2) + ' MRT!')
+		console.log(address + ' will receive ' + parseFloat(payment).toFixed(8) )
 
-		//send Waves fee
+		//send lto fee
 		if (Number(Math.round(payments[address])) > 0) {
 			transactions.push({
 				"amount": Number(Math.round(payments[address])),
@@ -441,35 +393,19 @@ var pay = function() {
 			});
 		}
 
-		//send MRT
-		if (Number(Math.round(mrt[address] * Math.pow(10, 2))) > 0) {
-			transactions.push({
-				"amount": Number(Math.round(mrt[address] * Math.pow(10, 2))),
-				"fee": config.feeAmount,
-				//"feeAssetId": config.assetFeeId,
-				"assetId": "4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC",
-				"sender": config.address,
-				"attachment": config.paymentAttachment,
-				"recipient": address
-			});
-		}
-
 	} else {
 		console.log(address + ' marked as NOPAYOUT, will not receive fee share.')
 	  }
 
-        totalMRT += mrt[address];
         totalfees += payments[address];
 
 
         html += "<tr><td>" + address + "</td><td>" + 							 	//address column
-				((payments[address]/100000000).toFixed(8)) + "</td><td>" + 	//Waves fee's
-				mrt[address].toFixed(2) + "</td><td>" +                     //MRT
+				((payments[address]/100000000).toFixed(8)) + "</td><td>" + 	//lto fee's
 				"\r\n";
     }	//End for loop
 
     html += "<tr><td><b>Total</b></td><td><b>" + ((totalfees/100000000).toFixed(8)) +
-		 "</b></td><td><b>" + totalMRT.toFixed(2) + "</b></td><td><b>" +
 			"\r\n";
 
     html += "</tbody>" +
@@ -479,7 +415,7 @@ var pay = function() {
 "</body>" +
 "</html>";
 
-    console.log("total Waves fees: " + (totalfees/100000000) + " total MRT: " + totalMRT );
+    console.log("total lto fees: " + (totalfees/100000000) );
     var paymentfile = config.filename + config.paymentid + ".json";
     var htmlfile = config.filename + config.paymentid + ".html";
 
@@ -502,7 +438,7 @@ var pay = function() {
     });
    
     // Create logfile with paymentinfo for reference and troubleshooting 
-    fs.writeFile(config.filename + config.paymentid + ".log", "total Waves fees: " + (totalfees/100000000) + " total MRT: " + totalMRT + "\n"
+    fs.writeFile(config.filename + config.paymentid + ".log", "total lto fees: " + (totalfees/100000000) + "\n"
 	+ "Total blocks forged: " + BlockCount + "\n"
 	+ "Payment ID of batch session: " + config.paymentid + "\n"
 	+ "Payment startblock: " + paymentstartblock + "\n"
@@ -632,10 +568,10 @@ var pay = function() {
 
 /**
  * This method returns (block-exact) the active leases and the total amount
- * of leased Waves for a given block.
+ * of leased lto for a given block.
  *
  * @param block the block to consider
- * @returns {{totalLeased: number, activeLeases: {}}} total amount of leased waves and active leases for the given block
+ * @returns {{totalLeased: number, activeLeases: {}}} total amount of leased lto and active leases for the given block
  */
 var getActiveLeasesAtBlock = function(block) {
     var activeLeases = [];

@@ -5,23 +5,23 @@
  *      - apiKey: the API key of the node that is used for distribution
  *
  * If you like this script, donations are welcome:
- * - you can DONATE Waves to alias 'donatewaves@plukkie' or address '3PKQKCw6DdqCvuVgKtZMhNtwzf2aTZygPu6'
- * - you can LEASE your Waves to alias 'plukkieforger' or 'plukkieleasing' or address '3P7ajba4wWLXq6t1G8VaoaVqbUb1dDp8fm4'
+ * - you can DONATE lto to alias 'donatelto@plukkie' or address '3PKQKCw6DdqCvuVgKtZMhNtwzf2aTZygPu6'
+ * - you can LEASE your lto to alias 'plukkieforger' or 'plukkieleasing' or address '3P7ajba4wWLXq6t1G8VaoaVqbUb1dDp8fm4'
  *
  * That's it! Enjoy
  */
 
 var config = {
-    payoutfileprefix: 'wavesleaserpayouts',
-    node: 'http://localhost:6869',
-    apiKey: 'your api key here please!!'
+    payoutfileprefix: 'ltoleaserpayouts',
+    node: 'http://217.100.219.250:6869',
+    apiKey: 'testnetapi'
 };
 
 const paymentqueuefile = 'payqueue.dat'
 const transactiontimeout = 1500 //Msecs to wait between every transaction posted
 const paymentsdonedir = 'paymentsDone/'
 const maxmasstransfertxs = 100 //Maximum nr of transactions that fit in 1 masstransfer
-const coins = [ "Waves", "Mrt" ] //Which coins we take into consideration for masstransfers
+const coins = [ "lto" ] //Which coins we take into consideration for masstransfers
 const transferfee = 100000
 const masstransferfee = 50000
 const masstransferversion = 1
@@ -121,20 +121,16 @@ function getpayqueue (myfunction) {
 
                 payoutfilename = config.payoutfileprefix + batchid + '.json'
 		batchpaymentarray = JSON.parse(fs.readFileSync(payoutfilename),toString())	//All transaction details current batch
-		var wavestransactions = 0
-		var mrttransactions = 0
+		var ltotransactions = 0
 		var transactioncount = parseInt(batchpaymentarray.length)	//how many transactions current batch		
 		var nrofmasstransfers //How many masstransfers needed for all payments
 		var txdelay	//total time needed for all masstransfers in current batch
 
 		batchpaymentarray.forEach( function (asset,index) {
-
-                	if ( !asset.assetId ) { wavestransactions++ }
-			else if ( asset.assetId && coins.includes('Mrt') ) { mrttransactions++ }
-
+                	ltotransactions++
 		})
 
-		nrofmasstransfers = Math.ceil(wavestransactions/maxmasstransfertxs) + Math.ceil(mrttransactions/maxmasstransfertxs)
+		nrofmasstransfers = Math.ceil(ltotransactions/maxmasstransfertxs)
 		txdelay = nrofmasstransfers*transactiontimeout
 		timeoutarray[index+1] = timeoutarray[index] + txdelay
 
@@ -173,10 +169,6 @@ function updatepayqueuefile (array, batchid) {
 	
 	  	if ( jobs == 0 ) { //Processed all jobs in the payqueue
 		        console.log(" Finished payments for all jobs in the payqueue. All done :-)\n")
-                        console.log(" If you enjoy this script, Waves or tokens on Waves are welcome as a gift;\n\n" +
-                                    "   - wallet alias: 'donatewaves@plukkie'\n" +
-                                    "   - wallet address: '3PKQKCw6DdqCvuVgKtZMhNtwzf2aTZygPu6'\n\n" +
-                                    " Happy forging!\n")
                 }
 }
 
@@ -210,7 +202,7 @@ var start = function(jsonarray, queueid, nrofmasstransfers) {
 var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 
 	var masstxsdone = 0 //counter to detect when all masstransfers are done for one payment batch
-	var payment = {} //Payment object with all transactions for Waves and Mrt
+	var payment = {} //Payment object with all transactions for lto
 	var masstxarray = [] //array with all transactions for 1 masstransfer
         var masstxpayment = {} //JSON object used for actual payment POST
 	var decimalpts //how many decimals for a token
@@ -243,8 +235,8 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 				var masstransfercounterup = 0
 				var logmessage
 
-				if ( asset == 'Waves' ) { decimalpts = 8 } else if ( asset == 'Mrt' ) { decimalpts = 2 }
- 				if ( asset !== 'Waves' ) { var assetId = payment["Common"][asset + "assetId"] }
+				if ( asset == 'lto' ) { decimalpts = 8 }
+ 				if ( asset !== 'lto' ) { var assetId = payment["Common"][asset + "assetId"] }
 
 				var masstransactionpayment = {	"version": masstransferversion,
 								"proofs": [ "8Aa6EUtS6qsHEBWdx7PjkqrVsE4kBMwbixS5eSCLtiSq" ],
@@ -252,11 +244,11 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 								"attachment": payment.Common.attachment,
 								"fee": 0 }
 
-				if ( asset !== 'Waves' ) { masstransactionpayment.assetId = assetId } //Add assetId to json if asset is NOT Waves
+				if ( asset !== 'lto' ) { masstransactionpayment.assetId = assetId } //Add assetId to json if asset is NOT lto
 
 				assettxs.forEach(function (asset) { assetamount += asset.amount }) //How much fees total for an asset
 
-				if ( asset == 'Waves' ) { var text = "fee rewards" } else { var text = asset }
+				if ( asset == 'lto' ) { var text = "fee rewards" } else { var text = asset }
 
 				logmessage = "[BatchID " + batchid + "] Found " + totaltxs + " '" + asset + "' transactions, total " + assetamount/Math.pow(10,decimalpts) +
                                             " " + text + ", will do " + masstransfers + " masstransfers."
@@ -317,14 +309,14 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 
 									if ( masstxsdone == nrofmasstransfers ) { //Finished All masstransfers for one batch!
 
-										console.log("\nTotal masstransfercosts: " + transfercostbatch + " Waves.")
+										console.log("\nTotal masstransfercosts: " + transfercostbatch + " lto.")
 
 										fs.appendFileSync(config.payoutfileprefix + batchid + ".log",
 												  "\n======= masstx payment log [" +(new Date())+ "] =======\n" + logobject +
-												  "\nTotal masstransfercosts: " + transfercostbatch + " Waves.\n" +
+												  "\nTotal masstransfercosts: " + transfercostbatch + " lto.\n" +
 												  "All payments done for batch " + batchid + ".\n" +
 												  "\nIf you enjoy this script, gifts are welcome at alias " +
-											    	  "'donatewaves@plukkie'\n\n")
+											    	  "'donatelto@plukkie'\n\n")
 
 										updatepayqueuefile(newpayqueue,batchid)
 									}
@@ -337,44 +329,34 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 	}) //End loop coins.forEach
 } //End var doPayment
 
-/* This var will create the masstransferarray for Waves and Mrt
+/* This var will create the masstransferarray for lto
  * @param paymentarray: the array with all lease recipients with amounts
  * @param cb: the array transfers is returned to the caller
 */
 var masstransferobject = function (paymentarray, cb) {
 	var transfers = {}
-	var waves = 'Waves'
-	var mrt = 'Mrt'
+	var lto = 'lto'
 	var common = 'Common'
-	var wavesamount = 0
+	var ltoamount = 0
 
 	transfers[common] = {}
-	transfers[waves] = []	//empty array where we will push waves recipients and amounts
-	transfers[mrt] = []	//empty array where we will push mrt recipients and amounts
+	transfers[lto] = []	//empty array where we will push lto recipients and amounts
 
 	paymentarray.forEach (function(asset, index) {
 
 		if ( asset.attachment ) { if ( !transfers[common].attachment == true ) { transfers[common].attachment = asset.attachment } }
 		if ( asset.sender ) { if ( !transfers[common].sender == true ) { transfers[common].sender = asset.sender } }
 
-		if ( !asset.assetId ) { //No assetId means found Waves transaction
+		if ( !asset.assetId ) { //No assetId means found lto transaction
 
-			var wavesdata = {	"recipient" : asset.recipient,
+			var ltodata = {	"recipient" : asset.recipient,
 						"amount" : asset.amount }
 
-			wavesamount += asset.amount
-			transfers[common].Wavesamount = wavesamount
-			transfers[waves].push(wavesdata)
+			ltoamount += asset.amount
+			transfers[common].ltoamount = ltoamount
+			transfers[lto].push(ltodata)
 
-		} else { //Found Mrt transaction
-			
-			if ( !transfers[common].MrtassetId == true ) { transfers[common].MrtassetId = asset.assetId }
-
-			var mrtdata = {		"recipient" : asset.recipient,
-						"amount" : asset.amount }
-
-			transfers[mrt].push(mrtdata)
-		  }
+		} 
 	})
 	cb(transfers);
 //console.log(transfers)

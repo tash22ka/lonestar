@@ -1,13 +1,11 @@
-# WavesLPoSDistributer
-A revenue distribution tool for Waves nodes\
-Welcome to Plukkies version of the LPoSdistribution script, 'the lazy' version,
-which queues up multiple sessions and automates next session info :-)\
+# LTO_LPoSDistributor
+A revenue distribution tool for LTO nodes\
+Welcome to Liquid Leasing Network version of the LPoSdistribution script,
+which queues up multiple sessions and automates next session info :-)
 
-Many thanks to original version of Marc Jansen and the fork of W0utje!\
+Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
 
-Donations are welcome if you like this version of the script: 'The lazy' version
-  - you can DONATE Waves to alias '**donatewaves@plukkie**' or address '**3PKQKCw6DdqCvuVgKtZMhNtwzf2aTZygPu6**'
-  - you can LEASE your Waves to alias '**plukkieforger**' or '**plukkieleasing**' or address '**3P7ajba4wWLXq6t1G8VaoaVqbUb1dDp8fm4**'
+Leases are welcome on '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5'
 
 ## Installation steps: prerequisits
 First of all, you need to install Node.js (https://nodejs.org/en/) and npm.\
@@ -15,17 +13,17 @@ This version is succesfully tested with versions;
  - node v10.12.0 (allthough lower should work probably)
  - npm 6.4.1 (allthough lower should work probably)
  - tested on Ubuntu 14.0 with kernel 4.4.0-116-generic (allthough of minor importance)
- - get the latest version from github: git clone https://github.com/plukkie/WavesLPoSDistributer.git
+ - get the latest version from github: git clone https://github.com/plukkie/LPoSDistributer.git
 
 To install node.js and npm, do following steps;
  - add repository: curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
  - install both packages: sudo apt-get install -y nodejs
 
-Now you can proceed with the Waves LPOS scripts installation, select the variant which applies to you.
+Now you can proceed with the lto LPOS scripts installation, select the variant which applies to you.
 
 ## Installation steps: first time users
 These steps are for users that do not use an older version of the LPoSdistributer package yet.
-1. CD into the LPoS package directory : WavesLPoSDistributer
+1. CD into the LPoS package directory : LTO_LPoSDistributer
 2. install the package independencies:
 ```sh
 mkdir node_modules
@@ -59,7 +57,6 @@ The size of the next batch (paystart / paystop blocks), is used from the\
 const myleasewallet = '<your node wallet>';		<== Put here the address of the wallet that your node uses
 const myquerynode = "http://localhost:6869";		<== The node and API port that you use (defaults to localhost)
 const feedistributionpercentage = 90;			<== How many % do you want to share with your leasers (defaults to 90%)
-const mrtperblock = 0;					<== How many MRT tokens per block do you want to share with your leasers (default 0)
 const blockwindowsize = 10000;				<== How many blocks to process for every subsequent paymentcycle.
 
 var nofeearray = [ ];					<== Put here wallet addresses that you want to exclude from payments,
@@ -78,7 +75,7 @@ var config = {
 var config = {
     <SNIP>,
     node: 'http://localhost:6869',			<== Change this value to your blockchain node/API port (defaults to localhost)
-    apiKey: 'your api key'				<== Put here the API key of your Waves node
+    apiKey: 'your api key'				<== Put here the API key of your lto node
 };
 ```
 NOTE\
@@ -93,8 +90,8 @@ Then don't forget to add your own values again in the modified script files if n
 If you use other version of the script, like from Marc jansen or w0utje, it's easy migration;
 
 1. Finish up all payments
-2. Rename directory of your current version to 'WavesLPoSDistributer.old'
-3. If correct, you new version directory is called 'WavesLPoSDistributer'\
+2. Rename directory of your current version to 'ltoLPoSDistributer.old'
+3. If correct, you new version directory is called 'ltoLPoSDistributer'\
    CD into the OLD version dir and copy following files to the NEW version dir;
 
    - LastBlockLeasers.json
@@ -127,6 +124,10 @@ After a successful configuration of the tool, start with:
 ```sh
 node appng.js OR start_collector.sh
 ```
+In Windows it's easier to just run:
+```sh
+node --stack-size=65565 --max-old-space-size=8192 appng.js
+```
 NOTE0\
 If you can't start 'start_collector', check if the script has execute 'x' on it.\
 If not add with: ```chmod u+x start_collector.sh```
@@ -143,18 +144,18 @@ To have all subsequent runs also changed, edit file 'appng.js' and set 'blockwin
 NOTE2\
 To run the collector tool every night @1 AM, edit /etc/crontab and put in following line;\
 ```sh
-00 01 * * * root cd /home/myuser/WavesLPoSDistributer/ && ./start_collector.sh
+00 01 * * * root cd /home/myuser/ltoLPoSDistributer/ && ./start_collector.sh
 ```
 After the tool ran, it finishes up by writing the actual payments to be done into the file which is configured in the script by:
 ```sh
 var config = {
-	filename: 'wavesleaserpayouts',
+	filename: 'ltoleaserpayouts',
 ```
 The name is constructed together with the paymentid (or batchID) of every batch session.\
 So, for the first run, the following three files will be created;
-- wavesleaserpayouts1.json
-- wavesleaserpayouts1.html
-- wavesleaserpayouts1.log
+- ltoleaserpayouts1.json
+- ltoleaserpayouts1.html
+- ltoleaserpayouts1.log
 
 The batchID is added to the payqueue.dat file. When there are already pending payments, it's just added.
 For the next session, the batchid is incremented by 1 and the batchdata.json file is updated with the new blockheights and batchID.
@@ -182,7 +183,7 @@ into one masstransfer transaction. This optimizes blockchain storage and and tra
 If you run the checker first (checkPaymentsfile.js), you'll get a nice overview which method is cheapest for
 for your payment batches. Both tools can just be used interchangelly.
 All batchIDs are sequencially read from the payment queue and the transactions are executed.\
-When a job finishes, the batchID is removed from the payqueue.dat and the three wavesleaserpayoutX.* files\
+When a job finishes, the batchID is removed from the payqueue.dat and the three ltoleaserpayoutX.* files\
 are moved to the archival directory (paymentsDone/).
 
 NOTE massPayment.js\
@@ -271,7 +272,7 @@ Payments for airdrops to leasers could be calculated by using the _airdrop_lease
  *     - amountToDistribute: amount of tokens that you want to distribute (have decimals in mind here...)
  *     - isStatic: boolean to select on which the sending amount is bases, true/false 
  *     			* true: every address receives amountToDistribute
- *     			* false: every address receives his percentage of amountToDistribute based on leased waves    
+ *     			* false: every address receives his percentage of amountToDistribute based on leased lto    
  *     - assetToDistributeId: id of the asset you want to airdrop
  *     - filename: name of the file the payments are written to
  *     - leasers: name of the file which contains the active leasers info, generated by app.js (LastBlockLeasers.json)
@@ -280,14 +281,14 @@ Payments for airdrops to leasers could be calculated by using the _airdrop_lease
 var config = {
     address: '3PEFQiFMLm1gTVjPdfCErG8mTHRcH2ATaWa',
     amountToDistribute: 1,
-    assetToDistributeId: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC', //BearWaves
+    assetToDistributeId: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC', //Bearlto
     filename: 'airdrop_leasers.json',
     leasers: 'LastBlockLeasers.json',
     isStatic: true,
     excludeList: ["3P31zvGdh6ai6JK6zZ18TjYzJsa1B83YPoj"] //Bittrex
 };
 ```
-This example will generate the paymentfile airdrop_leasers.json for sending 1 BearWaves to every leaser in the LastBlockLeasers.json file.
+This example will generate the paymentfile airdrop_leasers.json for sending 1 Bearlto to every leaser in the LastBlockLeasers.json file.
 
 Afterwards, the script could be started with:
 ```sh
