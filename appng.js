@@ -89,7 +89,7 @@ var config = {
     filename: 'ltoleaserpayouts', //.json added automatically
     paymentid: payid,
     node: myquerynode,
-    feeAmount: 100000,
+    feeAmount: 25000000,
     paymentAttachment: attachment, 
     percentageOfFeesToDistribute: feedistributionpercentage
 };
@@ -311,8 +311,6 @@ var distribute = function(activeLeases, amountTotalLeased, block) {
 	  }
 
         var amount = fee * share;
-
-        var assetamounts = [];
 
        	if (address in payments) {
        		payments[address] += amount * (config.percentageOfFeesToDistribute / 100);
