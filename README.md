@@ -5,7 +5,7 @@ which queues up multiple sessions and automates next session info :-)
 
 Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
 
-Leases are welcome on '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5'
+You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0 for his stats node: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
 
 ## Installation steps: prerequisits
 First of all, you need to install Node.js (https://nodejs.org/en/) and npm.\
@@ -13,7 +13,7 @@ This version is succesfully tested with versions;
  - node v10.12.0 (allthough lower should work probably)
  - npm 6.4.1 (allthough lower should work probably)
  - tested on Ubuntu 14.0 with kernel 4.4.0-116-generic (allthough of minor importance)
- - get the latest version from github: git clone https://github.com/plukkie/LPoSDistributer.git
+ - get the latest version from github: git clone https://github.com/jayjaynl/LTO_LPoSDistributor.git
 
 To install node.js and npm, do following steps;
  - add repository: curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -

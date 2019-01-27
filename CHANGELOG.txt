@@ -3,7 +3,11 @@
  * This is a fork by Liquid Leasing Network of Plukkie's version of the LPoSDistributor
  * Many thanks to the version of Plukkie, and the original version of Marc Jansen and the fork of W0utje.
  *
- * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5'
+ * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs.
+ *
+ * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network
+ * 
+ * or to Rob/G1zm0 for his stats node: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
  *
  * Thank you and Enjoy!
  *

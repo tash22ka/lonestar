@@ -13,11 +13,11 @@ var fs = require('fs');
  *     - node: address of your node in the form http://<ip>:<port
  */
 var config = {
-   	address: '<address to check tx from>',
+   	address: 'address to check tx from',
     startBlockHeight: 696358,
     endBlock: 696393,
     filename: 'payment24', //.json added automatically
-    node: 'http://217.100.219.250:6869',
+    node: 'http://localhost:6869',
 };
 
 

@@ -2,8 +2,12 @@
  * V1.0.0 - Liquid Leasing Network - LTO_LPoSDistributor
  *
  * A fork of Plukkies version of the LPoSdistribution script for LTO.network (https://github.com/plukkie/WavesLPoSDistributer)
- *
- * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5'
+ * 
+ * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs. 
+ * 
+ * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network
+ * 
+ * or to Rob/G1zm0 for his stats node: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
  *
  * Please see CHANGELOG.txt for all features/changes
  * Please see README.md for complete explanation of LPoSdistributor package
@@ -21,8 +25,8 @@
 
 
 // START - Put your settings here
-const myleasewallet = '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5';	//Put here the address of the wallet that your node uses
-const myquerynode = "http://217.100.219.250:6869";	//The node and API port that you use (defaults to localhost)
+const myleasewallet = 'your address';	//Put here the address of the wallet that your node uses
+const myquerynode = "http://localhost:6869";	//The node and API port that you use (defaults to localhost)
 const feedistributionpercentage = 95;		//How many % do you want to share with your leasers (defaults to 90%)
 const blockwindowsize = 5000; 			//how many blockss to proces for every paymentcycle
 

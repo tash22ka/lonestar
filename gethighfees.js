@@ -11,7 +11,7 @@ var fs = require('fs');
 var config = {
     startBlockHeight: 763084,
     endBlock: 763187,
-    node: 'http://217.100.219.250:6869'
+    node: 'http://localhost:6869'
 };
 
 var currentStartBlock = config.startBlockHeight;

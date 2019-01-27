@@ -5,7 +5,7 @@
 
 var config = {
     payoutfileprefix: 'ltoleaserpayouts',
-    node: '<enter node api address>',	//Change this value to your blockchain node
+    node: 'enter node api address',	//Change this value to your blockchain node
     paymentqueuefile: 'payqueue.dat'
 };
 

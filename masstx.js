@@ -13,8 +13,8 @@
 
 var config = {
     payoutfileprefix: 'ltoleaserpayouts',
-    node: 'http://217.100.219.250:6869',
-    apiKey: 'testnetapi'
+    node: 'http://localhost:6869',
+    apiKey: 'your api key'
 };
 
 const paymentqueuefile = 'payqueue.dat'
