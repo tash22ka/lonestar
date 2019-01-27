@@ -11,17 +11,13 @@ var fs = require('fs');
  *     - endBlock: the block until you want to check
  *     - filename: file to which the payments for the mass payment tool are written  
  *     - node: address of your node in the form http://<ip>:<port
- *     - NewfeeAssetId: Change feeAssetId for missing payments file if enabled
- *     - ChangeAssetFee: true/false enable/disable changing feeAssetId on new payment file 
  */
 var config = {
-   	address: '3PEFQiFMLm1gTVjPdfCErG8mTHRcH2ATaWa',
+   	address: '<address to check tx from>',
     startBlockHeight: 696358,
     endBlock: 696393,
     filename: 'payment24', //.json added automatically
     node: 'http://217.100.219.250:6869',
-    NewfeeAssetId: "5BK9HPKmSkxoMdqvDzneb2UaW2NzDRjoMpMvQWfB4NcK",
-    ChangeAssetFee: false    
 };
 
 
@@ -86,10 +82,6 @@ var start = function() {
         
         if(!thisoneexists)
            {            
-            if(config.ChangeAssetFee)
-            {
-              tx.feeAssetId = config.NewfeeAssetId;
-            }
             missingtxs.push(tx);
            }           
         
@@ -145,9 +137,6 @@ var prepareDataStructure = function(blocks) {
  * @returns {Array} all relevant blocks
  */
 var getAllBlocks = function() {
-    // leases have been resetted in block 462000, therefore, this is the first relevant block to be considered
-    //var firstBlockWithLeases=462000;
-    //var currentStartBlock = firstBlockWithLeases;
     var blocks = [];
 
     while (currentStartBlock < config.endBlock) {
