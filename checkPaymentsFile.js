@@ -5,7 +5,7 @@
 
 var config = {
     payoutfileprefix: 'ltoleaserpayouts',
-    node: 'http://217.100.219.250:6869',	//Change this value to your blockchain node
+    node: '<enter node api address>',	//Change this value to your blockchain node
     paymentqueuefile: 'payqueue.dat'
 };
 
@@ -21,8 +21,8 @@ var assetamount = 0;
 var allbatchsinglecost = 0
 var allbatchmasstxcost = 0
 
-const transferfee = 100000
-const masstransferfee = 50000
+const transferfee = 25000000
+const masstransferfee = 1000000
 const maxmasstransfertxs = 100 //Maximum nr of transactions that fit in 1 masstransfer
 
 //This function rounds a number up to the nearest upper number
