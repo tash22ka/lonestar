@@ -89,7 +89,6 @@ var config = {
     filename: 'ltoleaserpayouts', //.json added automatically
     paymentid: payid,
     node: myquerynode,
-    assetFeeId: null, //not used anymore with sponsored tx
     feeAmount: 100000,
     paymentAttachment: attachment, 
     percentageOfFeesToDistribute: feedistributionpercentage
@@ -186,14 +185,14 @@ var prepareDataStructure = function(blocks) {
         {
             myForgedBlocks.push(block);
             checkprevblock = true;
-			myblock = true;
-		}
-		var blockltofees=0;
+            myblock = true;
+        }
+	var blockltofees=0;
 
         block.transactions.forEach(function(transaction)
         {
             // type 8 are leasing tx
-            if (transaction.type === 8 && ((transaction.recipient === config.address)|| (myAliases.indexOf(transaction.recipient) > -1) )){
+            if (transaction.type === 8 && transaction.recipient === config.address){
                 transaction.block = block.height;
                 myLeases[transaction.id] = transaction;
             } else if (transaction.type === 9 && myLeases[transaction.leaseId]) { // checking for lease cancel tx
@@ -211,11 +210,7 @@ var prepareDataStructure = function(blocks) {
                 } else {
                     console.log("Filter TX at block: " + block.height + " Amount: " +  transaction.fee)
                 }
-            } else if (block.height > 1090000 && transaction.type === 4) {
-            blockltofees += 100000;
-	}
-
-			}
+            }
       });
       ltoFees += Math.round(parseInt(blockltofees / 5) * 2);
 
@@ -378,7 +373,6 @@ var pay = function() {
 			transactions.push({
 				"amount": Number(Math.round(payments[address])),
 				"fee": config.feeAmount,
-				//"feeAssetId": config.assetFeeId,
 				"sender": config.address,
 				"attachment": config.paymentAttachment,
 				"recipient": address
