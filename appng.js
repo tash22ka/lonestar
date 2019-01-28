@@ -56,7 +56,6 @@ if (fs.existsSync(batchinfofile)) {
    paymentstopblock = parseInt(mybatchdata["paystopblock"]);
    startscanblock = parseInt(mybatchdata["scanstartblock"]);
    payid = parseInt(mybatchdata["paymentid"]); 
-   attachment = mybatchdata["attachment"];
 
    // Collect height of last block in lto blockchain
    let options = {
@@ -94,7 +93,6 @@ var config = {
     paymentid: payid,
     node: myquerynode,
     feeAmount: 25000000,
-    paymentAttachment: attachment, 
     percentageOfFeesToDistribute: feedistributionpercentage
 };
 
@@ -376,7 +374,6 @@ var pay = function() {
 				"amount": Number(Math.round(payments[address])),
 				"fee": config.feeAmount,
 				"sender": config.address,
-				"attachment": config.paymentAttachment,
 				"recipient": address
 			});
 		}

@@ -38,7 +38,6 @@ EDIT file batchinfo.json with vim or nano;
 
 {
     "batchdata": {
-        "attachment": "NK2oQJzq7sjCvh7AjJcLjLT9Ax",	<== Put here a base58 encoded message (default is: "thanks for leasing!")
         "paymentid": "1",				<== Leave as is
         "paystartblock": "1044012",			<== Put here same value as 'scanstartblock'. It's when payouts should start
         "paystopblock": "1050000",			<== Put here a value when payouts should stop (i.e. paystartblock+5000)

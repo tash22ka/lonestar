@@ -237,7 +237,6 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 				var masstransactionpayment = {	"version": masstransferversion,
 								"proofs": [ "8Aa6EUtS6qsHEBWdx7PjkqrVsE4kBMwbixS5eSCLtiSq" ],
 								"sender": payment.Common.sender,
-								"attachment": payment.Common.attachment,
 								"fee": 0 }
 
 				if ( asset !== 'lto' ) { masstransactionpayment.assetId = assetId } //Add assetId to json if asset is NOT lto
@@ -338,7 +337,6 @@ var masstransferobject = function (paymentarray, cb) {
 
 	paymentarray.forEach (function(asset, index) {
 
-		if ( asset.attachment ) { if ( !transfers[common].attachment == true ) { transfers[common].attachment = asset.attachment } }
 		if ( asset.sender ) { if ( !transfers[common].sender == true ) { transfers[common].sender = asset.sender } }
 
 		if ( !asset.assetId ) { //No assetId means found lto transaction
