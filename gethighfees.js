@@ -9,8 +9,8 @@ var fs = require('fs');
  *     - node: address of your node in the form http://<ip>:<port
  */
 var config = {
-    startBlockHeight: 763084,
-    endBlock: 763187,
+    startBlockHeight: 0,
+    endBlock: 0,
     node: 'http://localhost:6869'
 };
 
@@ -69,9 +69,7 @@ var prepareDataStructure = function(blocks) {
  * @returns {Array} all relevant blocks
  */
 var getAllBlocks = function() {
-    // leases have been resetted in block 462000, therefore, this is the first relevant block to be considered
-    //var firstBlockWithLeases=462000;
-    //var currentStartBlock = firstBlockWithLeases;
+
     var blocks = [];
 
     while (currentStartBlock < config.endBlock) {

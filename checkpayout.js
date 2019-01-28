@@ -2,8 +2,8 @@ var request = require('sync-request');
 var fs = require('fs');
 
 /**
- * lto Node script for checking a payments file's transactions on blockchain
- * outputs the a payment file with missing payments 
+ * LTO.network Node script for checking a payments file's transactions on blockchain
+ * outputs a payment file with missing payments 
  *    
  * Put your settings here:
  *     - address: the address of the sender on the blockchain to check

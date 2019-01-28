@@ -85,43 +85,6 @@ NOTE\
 For security reasons, remove 'rwx' worldrights from massPayment.js and masstx.js -> ```chmod o-rwx massPayment.js``` \
 Repeat for masstx.js. Now you can jump to chapter "Running the collector sessions".
 
-## Installation steps: users that already use previous versions of Plukkies LPoSdistributer script
-Just look into the **CHANGELOG.txt** file and replace the modified files and copy the new files.
-Then don't forget to add your own values again in the modified script files if needed (checkPaymentsFile.js)
-
-## Installation steps: users that already use previous versions of LPoSdistributer script (other then plukkies version)
-If you use other version of the script, like from Marc jansen or w0utje, it's easy migration;
-
-1. Finish up all payments
-2. Rename directory of your current version to 'ltoLPoSDistributer.old'
-3. If correct, you new version directory is called 'ltoLPoSDistributer'\
-   CD into the OLD version dir and copy following files to the NEW version dir;
-
-   - LastBlockLeasers.json
-   - The last leaserpayout info file, which looks like following;
-     1250000_3P7vmba4wWLXq6t1G8VaoaVqbUb1dDp8gj4.json
-
-     This name represents the "stopblock"_ from the last session + the wallet address of your node
-4. Now CD into the NEW version directory
-5. EDIT the batchinfo.json file with nano or vim;
-```sh
-{
-    "batchdata": {
-        "attachment": "NK2oQJzq7sjCvh7AjJcLjLT9Ax",     <== Put here a base58 encoded message (default is: "thanks for leasing!")
-        "paymentid": "1",                               <== Leave as is
-        "paystartblock": "<stopblock>",                 <== Put here the 'stopblock' value, see explained in bullet 3
-        "paystopblock": "<stopblock+X",                 <== Put here a value when payouts should stop (i.e. paystopblock+5000)
-                                                            It doesn't really matter, as long as it is higher than paystartblock.
-                                                            It only counts for the first run, and if no blocks were forged yet, that
-                                                            is no problem. Follow up session results are just queued up in line :-))
-        "scanstartblock": "1044012"                     <== For best practise, you can put here the blockheight of your first ACTIVE lease.
-							    It's only needed when you would loose the last leaserpayoutfiles for some reason.
-    }
-}
-```
-6. Now follow steps explained earlier in 'Installation steps: first time users' but,\
-You should SKIP step 3 !!!
-
 ## Running the collector sessions
 After a successful configuration of the tool, start with:
 ```sh

@@ -3,7 +3,7 @@
  *      - node: address of your node in the form http://<ip>:<port>
  *      - apiKey: the API key of the node that is used for distribution
  *
- * That's it! Enjoy
+ *  That's it! Enjoy
  */
 
 var config = {
