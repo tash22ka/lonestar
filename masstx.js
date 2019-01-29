@@ -18,9 +18,10 @@ const transactiontimeout = 1500 //Msecs to wait between every transaction posted
 const paymentsdonedir = 'paymentsDone/'
 const maxmasstransfertxs = 100 //Maximum nr of transactions that fit in 1 masstransfer
 const coins = [ "lto" ] //Which coins we take into consideration for masstransfers
-const transferfee = 25000000
-const masstransferfee = 1000000
+const transferfee     = 25000000
+const masstransferfee = 10000000
 const masstransferversion = 1
+const masstransfertype = 11
 
 
 // THIS CONST VALUE IS NEEDED WHEN THE PAYMENT PROCESS HALTS OR CRASHES
@@ -36,24 +37,6 @@ var fs = require('fs');
 var request = require('request');
 var newpayqueue = []
 var jobs
-
-//This function rounds a number up to the nearest upper number
-//i.e. number is 230000, upper is 100000 -> 300000
-//i.e. number is 180000, upper is 100000 -> 200000
-//@params number: the number to normalize
-//@params upper: the nearest upper number for roundup
-function roundup(number, upper) {
-
-        var i = number - upper
-
-        while ( i > upper ) {
-                i -= upper
-        }
-
-        var delta = upper - i
-        number += delta
-        return number
-}
 
 /*
 ** Method to do some tests before program run any further
@@ -234,10 +217,11 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 				if ( asset == 'lto' ) { decimalpts = 8 }
  				if ( asset !== 'lto' ) { var assetId = payment["Common"][asset + "assetId"] }
 
-				var masstransactionpayment = {	"version": masstransferversion,
-								"proofs": [ "8Aa6EUtS6qsHEBWdx7PjkqrVsE4kBMwbixS5eSCLtiSq" ],
-								"sender": payment.Common.sender,
-								"fee": 0 }
+				var masstransactionpayment = {
+ 								"version": masstransferversion,
+								"type": masstransfertype,
+								"sender": payment.Common.sender
+				}
 
 				if ( asset !== 'lto' ) { masstransactionpayment.assetId = assetId } //Add assetId to json if asset is NOT lto
 
@@ -273,7 +257,6 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 						masstransfercounter-- //For breaking the for loop
 						masstransfercounterup++
 						masstransfercost = transferfee + (masstransferfee * masstxarray.length)
-						masstransfercost = roundup(masstransfercost, transferfee)
 						masstransactionpayment.fee = masstransfercost //Add fee to masstransfer json object
 
 						if ( totaltxs > maxmasstransfertxs ) { //calc number of transactions for last masstransfer
@@ -282,39 +265,57 @@ var doPayment = function(payments, counter, batchid, nrofmasstransfers) {
 						if ( masstransfers == 1 ) { timeout = 0 } else { timeout = transactiontimeout }
 
 						//Put here the actual POST function for a masstransfer
-        	                                request.post({ url: config.node + '/assets/masstransfer',
-								json: masstransactionpayment,
-                        	                        	headers: { "Accept": "application/json", "Content-Type": "application/json", "api_key": config.apiKey }
-                                        		     }, function(err) {
-								if (err) {
-                                                        		console.log(err);
-                                                		} else {
-									logmessage = "         " + batchid + "] - masstransfer " + masstransfercounterup +
-                                                                                     " for " + asset + " done! Send " + onemasstransferamount/Math.pow(10,decimalpts) +
-										     " " + asset + " with " + masstxarray.length + " transactions in it." +
-										     " Cost " + masstransactionpayment.fee/Math.pow(10,8)
+            request.post({
+              url: config.node + '/transactions/sign',
+              json: masstransactionpayment,
+              headers: {"Accept": "application/json", "Content-Type": "application/json", "api_key": config.apiKey}
+            }, function (err, res) {
+              if (err || res.body.error) {
+                const error = err || res.body;
 
-									console.log(logmessage)
+                console.log(error);
+                return;
+              }
 
-									logobject += logmessage + "\n"
-									masstxarray = []
-									onemasstransferamount = 0
-									masstxsdone++
-									transfercostbatch += masstransactionpayment.fee/Math.pow(10,8)
+              request.post({
+                url: config.node + '/transactions/broadcast',
+                json: res.body,
+                headers: {"Accept": "application/json", "Content-Type": "application/json"}
+              }, function (err, res) {
 
-									if ( masstxsdone == nrofmasstransfers ) { //Finished all masstransfers for one batch!
+                if (err || res.body.error) {
+                  const error = err || res.body;
 
-										console.log("\nTotal masstransfercosts: " + transfercostbatch + " lto.")
+                  console.log(error);
+                  return;
+                }
 
-										fs.appendFileSync(config.payoutfileprefix + batchid + ".log",
-												  "\n======= masstx payment log [" +(new Date())+ "] =======\n" + logobject +
-												  "\nTotal masstransfercosts: " + transfercostbatch + " lto.\n" +
-												  "All payments done for batch " + batchid + ".\n")
+                logmessage = "         " + batchid + "] - masstransfer " + masstransfercounterup +
+                  " for " + asset + " done! Send " + onemasstransferamount / Math.pow(10, decimalpts) +
+                  " " + asset + " with " + masstxarray.length + " transactions in it." +
+                  " Cost " + masstransactionpayment.fee / Math.pow(10, 8)
 
-										updatepayqueuefile(newpayqueue,batchid)
-									}
-                                                		}
-                                        	});
+                console.log(logmessage)
+
+                logobject += logmessage + "\n"
+                masstxarray = []
+                onemasstransferamount = 0
+                masstxsdone++
+                transfercostbatch += masstransactionpayment.fee / Math.pow(10, 8)
+
+                if (masstxsdone == nrofmasstransfers) { //Finished all masstransfers for one batch!
+
+                  console.log("\nTotal masstransfercosts: " + transfercostbatch + " lto.")
+
+                  fs.appendFileSync(config.payoutfileprefix + batchid + ".log",
+                    "\n======= masstx payment log [" + (new Date()) + "] =======\n" + logobject +
+                    "\nTotal masstransfercosts: " + transfercostbatch + " lto.\n" +
+                    "All payments done for batch " + batchid + ".\n")
+
+                  updatepayqueuefile(newpayqueue, batchid)
+                }
+              });
+            });
 					}, timeout) //End function masstransfers
 				} //End for all masstransfers loop
 			}, delayarray[index]) //End function actions for an Asset
