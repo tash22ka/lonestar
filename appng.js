@@ -7,7 +7,7 @@
  * 
  * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network
  * 
- * or to Rob/G1zm0 for his stats node: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
+ * or to Rob/G1zm0 for his stats node: '3JujV7o14LM3vo9bpXtZmqAkyBFwzVJJWdn'
  *
  * Please see CHANGELOG.txt for all features/changes
  * Please see README.md for complete explanation of LPoSdistributor package
