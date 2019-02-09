@@ -342,9 +342,9 @@ var pay = function() {
 "<html lang=\"en\">" +
 "<head>" +
 "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
-"  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">" +
-"  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>" +
-"  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>" +
+"  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css\">" +
+"  <script src=\"https://code.jquery.com/jquery-3.3.1.min.js\"></script>" +
+"  <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js\"></script>" +
 "</head>" +
 "<body>" +
 
@@ -352,7 +352,7 @@ var pay = function() {
 "  <h3>Fee's between blocks " + config.startBlockHeight + " - " + config.endBlock + ", Payout #" + config.paymentid + "</h3>" +
 "  <h4>(LPOS address: " + config.address + ")</h4>" +
 "  <h5>Blocks forged: " + BlockCount + "</h5>" +
-"  <table class=\"table table-striped table-hover\">" +
+"  <table class=\"table table-striped table-hover pt-5\">" +
 "    <thead> " +
 "      <tr>" +
 "        <th>Address</th>" +
@@ -386,11 +386,11 @@ var pay = function() {
 
 
         html += "<tr><td>" + address + "</td><td>" + 							 	//address column
-				((payments[address]/100000000).toFixed(8)) + "</td><td>" + 	//lto fee's
+				((payments[address]/100000000).toFixed(8)) + "</td></tr>" + 	//lto fee's
 				"\r\n";
     }	//End for loop
 
-    html += "<tr><td><b>Total</b></td><td><b>" + ((totalfees/100000000).toFixed(8)) +
+    html += "<tr><td><b>Total</b></td><td><b>" + ((totalfees/100000000).toFixed(8)) + "</b></td></tr>" +
 			"\r\n";
 
     html += "</tbody>" +
