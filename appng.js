@@ -1,13 +1,13 @@
 /* =================================================================================================================
- * V1.0.0 - Liquid Leasing Network - LTO_LPoSDistributor
+ * V1.0.0 - LTO_LPoSDistributor
  *
  * A fork of Plukkies version of the LPoSdistribution script for LTO.network (https://github.com/plukkie/WavesLPoSDistributer)
  * 
- * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs. 
+ * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) and Sven Stam from LTO team for helping out and fixing bugs. 
  * 
  * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network
  * 
- * or to Rob/G1zm0 for his stats node: '3JujV7o14LM3vo9bpXtZmqAkyBFwzVJJWdn'
+ * or to Rob/G1zm0: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
  *
  * Please see CHANGELOG.txt for all features/changes
  * Please see README.md for complete explanation of LPoSdistributor package

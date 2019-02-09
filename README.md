@@ -1,17 +1,16 @@
-# 27-01-2019: DON'T USE YET, NOT TESTED
-# 27-01-2019: DON'T USE YET, NOT TESTED
-
+# USE AT OWN RISK, NOT ALL SCRIPTS ARE VERIFIED TO WORK 100% WITH LTO
+# 
 # LTO_LPoSDistributor
 A revenue distribution tool for LTO.network nodes
 
-Welcome to Liquid Leasing Network version of the LPoSdistribution script for LTO.network,
+Welcome to LTO.network version of the LPoSdistribution script,
 which queues up multiple sessions and automates next session info :-)
 
-Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs.
+Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) and Sven Stam from LTO team for helping out and fixing bugs.
 
 Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
 
-You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0 for his stats node: '3JujV7o14LM3vo9bpXtZmqAkyBFwzVJJWdn'
+You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
 
 ## Installation steps: prerequisits
 First of all, you need to install Node.js (https://nodejs.org/en/) and npm.\

@@ -1,14 +1,14 @@
 /* =====lto====lto====lto====lto====lto====lto====lto====lto====lto====lto===lto====lto====
  *
- * This is a fork by Liquid Leasing Network of Plukkie's version of the LPoSDistributor
+ * This is a fork by of Plukkie's version of the LPoSDistributor
  *
- * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) for helping out and fixing bugs.
+ * Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) and Sven Stam from LTO team for helping out and fixing bugs.
  *
  * Many thanks to the version of Plukkie, and the original version of Marc Jansen and the fork of W0utje.
  *
  * You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network
  * 
- * or to Rob/G1zm0 for his stats node: '3JujV7o14LM3vo9bpXtZmqAkyBFwzVJJWdn'
+ * or to Rob/G1zm0: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
  *
  * Thank you and Enjoy!
  *
@@ -20,10 +20,10 @@
  *
  * CHANGES
  * - Removed all 'Waves' and 'MRT' references
- * - Changed all scripts to work with LTO
  * - Rewrote some instructions
  * - Rewrote changelog
  * - Rewrote readme
+ * - Rewrote appng, checkpaymentfile and masstx scripts to work with LTO
  *
  * ================================================================================================================= */
 
