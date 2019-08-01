@@ -21,7 +21,7 @@ var assetamount = 0;
 var allbatchsinglecost = 0
 var allbatchmasstxcost = 0
 
-const transferfee = 25000000
+const transferfee = 100000000
 const masstransferfee = 10000000;
 const maxmasstransfertxs = 100 //Maximum nr of transactions that fit in 1 masstransfer
 
