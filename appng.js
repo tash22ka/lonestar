@@ -91,7 +91,7 @@ var config = {
     filename: 'ltoleaserpayouts', //.json added automatically
     paymentid: payid,
     node: myquerynode,
-    feeAmount: 25000000,
+    feeAmount: 100000000,
     percentageOfFeesToDistribute: feedistributionpercentage
 };
 
