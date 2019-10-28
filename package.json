@@ -14,7 +14,7 @@
   "author": "Liquid Leasing Network & Rob/G1zm0 & Sven Stam",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.81.0",
-    "sync-request": "^4.0.2"
+    "request": "^2.88.0",
+    "sync-request": "^6.1.0"
   }
 }
