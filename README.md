@@ -27,8 +27,8 @@ To install node.js and npm, do following steps;
 Now you can proceed with the lto LPOS scripts installation, select the variant which applies to you.
 
 ## Installation steps: first time users
-These steps are for users that do not use an older version of the LPoSdistributer package yet.
-1. CD into the LPoS package directory : LTO_LPoSDistributer
+These steps are for users that do not use an older version of the LTO_LPoSDistributor package yet.
+1. CD into the LPoS package directory : LTO_LPoSDistributor
 2. install the package independencies:
 ```sh
 mkdir node_modules
@@ -111,7 +111,7 @@ To have all subsequent runs also changed, edit file 'appng.js' and set 'blockwin
 NOTE2\
 To run the collector tool every night @1 AM, edit /etc/crontab and put in following line;\
 ```sh
-00 01 * * * root cd /home/myuser/ltoLPoSDistributer/ && ./start_collector.sh
+00 01 * * * root cd /home/myuser/LTO_LPoSDistributor/ && ./start_collector.sh
 ```
 After the tool ran, it finishes up by writing the actual payments to be done into the file which is configured in the script by:
 ```sh

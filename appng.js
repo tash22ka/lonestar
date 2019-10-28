@@ -31,7 +31,6 @@ const feedistributionpercentage = 95;		//How many % do you want to share with yo
 const blockwindowsize = 5000; 			//how many blockss to proces for every paymentcycle
 
 // Put here wallet addresses that will receive no fees
-// Could be wallets that award you with leases like the lto small node program
 // var nofeearray = [ "3P6CwqcnK1wyW5TLzD15n79KbAsqAjQWXYZ",       //index0
 //                    "3P9AodxBATXqFC3jtUydXv9YJ8ExAD2WXYZ" ];
 var nofeearray = [ ]; 
@@ -92,7 +91,7 @@ var config = {
     filename: 'ltoleaserpayouts', //.json added automatically
     paymentid: payid,
     node: myquerynode,
-    feeAmount: 25000000,
+    feeAmount: 100000000,
     percentageOfFeesToDistribute: feedistributionpercentage
 };
 
