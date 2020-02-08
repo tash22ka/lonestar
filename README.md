@@ -10,7 +10,7 @@ Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) and Sv
 
 Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
 
-You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0: '3JeUGgoCUy5wXpNKHqhaLpvGZrshtvwt9b9'
+You can lease to '3JqGGBMvkMtQQqNhGVD6knEzhncb55Y7JJ5' for Liquid Leasing Network or to Rob/G1zm0's ltonode.com : '3JnN8psLjuEyiPbH2bYcEFKUFpcamxzwFiv'
 
 ## Installation steps: prerequisits
 First of all, you need to install Node.js (https://nodejs.org/en/) and npm.\
