@@ -6,7 +6,7 @@ A revenue distribution tool for LTO.network nodes
 Welcome to LTO.network version of the LPoSdistribution script,
 which queues up multiple sessions and automates next session info :-)
 
-Massive thank you to Rob / G1zm0 (http://dev.pywaves.org/LTO/generators/) and Sven Stam from LTO team for helping out and fixing bugs.
+Massive thank you to Rob / G1zm0 (https://lto.tools/generators/ and https://ltonode.com) and Sven Stam from LTO team for helping out and fixing bugs.
 
 Many thanks to the version of Plukkie (https://github.com/plukkie/WavesLPoSDistributer), and the original version of Marc Jansen (https://github.com/jansenmarc/WavesLPoSDistributer) and the fork of W0utje (https://github.com/w0utje/WavesLPoSDistributer)!
 
